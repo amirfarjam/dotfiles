@@ -8,7 +8,7 @@
 after-startup-command = []
 
 # Start AeroSpace at login
-start-at-login = false
+start-at-login = true
 
 
 
@@ -193,6 +193,8 @@ automatically-unhide-macos-hidden-apps = false
     9 = 'main'
     10 = 'secondary'  # Laptop screen gets Workspace 10
     A  = 'secondary'  # Laptop screen gets Workspace A
+
+    ctrl-shift-f = 'layout floating tiling'
 
 ###############################################
 #  APP → WORKSPACE RULES (YOUR SETUP)
