@@ -44,29 +44,6 @@ fi
 # Load Spaceship (must be after OMZ)
 if [ -f "/opt/homebrew/opt/spaceship/spaceship.zsh" ]; then
     source "/opt/homebrew/opt/spaceship/spaceship.zsh"
-    
-    # Customize Spaceship - using only available sections
-    SPACESHIP_PROMPT_ORDER=(
-        time          # Time stamps
-        user          # Username
-        dir           # Current directory
-        host          # Hostname
-        git           # Git info
-        package       # Package version
-        node          # Node.js version
-        ruby          # Ruby version
-        python        # Python version
-        docker        # Docker
-        exec_time     # Execution time
-        jobs          # Background jobs indicator
-        exit_code     # Exit code section
-        char          # Prompt character
-    )
-    
-    SPACESHIP_TIME_SHOW=true
-    SPACESHIP_USER_SHOW=always
-    SPACESHIP_DIR_TRUNC=0  # Show full directory path
-    SPACESHIP_GIT_BRANCH_SHOW=true
 fi
 
 ### --- Plugins ---------------------------------------------------------------
