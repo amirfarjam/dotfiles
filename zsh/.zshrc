@@ -1,5 +1,5 @@
 ###############################################################################
-# ENHANCED ZSH CONFIGURATION
+# ENHANCED ZSH CONFIGURATION (CLEAN VERSION)
 ###############################################################################
 
 ### --- Terminal & Colors ------------------------------------------------------
@@ -33,30 +33,40 @@ HISTFILE="$HOME/.zsh_history"
 ### --- Oh-My-Zsh -------------------------------------------------------------
 export ZSH="$HOME/.oh-my-zsh"
 
-# Disable OMZ theme since we're using Spaceship manually
+# Disable OMZ theme (Spaceship is loaded manually)
 ZSH_THEME=""
 
 if [ -d "$ZSH" ]; then
     source "$ZSH/oh-my-zsh.sh"
 fi
 
-### --- Spaceship Prompt ------------------------------------------------------
-# Load Spaceship (must be after OMZ)
+###############################################################################
+# LOAD SPACESHIP PROMPT + SEPARATE CONFIG
+###############################################################################
+# Load Spaceship
 if [ -f "/opt/homebrew/opt/spaceship/spaceship.zsh" ]; then
     source "/opt/homebrew/opt/spaceship/spaceship.zsh"
 fi
 
+# Load custom Spaceship config
+[[ -f ~/.spaceshiprc.zsh ]] && source ~/.spaceshiprc.zsh
+
+###############################################################################
+
 ### --- Plugins ---------------------------------------------------------------
+
 # Autosuggestions
 if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+    # Prefer completion-based hints first, history second
+    ZSH_AUTOSUGGEST_STRATEGY=(completion history)
+
+    # Ignore history-based suggestions for cd
+    ZSH_AUTOSUGGEST_HISTORY_IGNORE="cd *"
+
     # Bind tab to accept suggestion
     bindkey '^ ' autosuggest-accept
-fi
-
-# Syntax highlighting (must load last)
-if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 ### --- Completion ------------------------------------------------------------
@@ -104,6 +114,7 @@ alias mv='mv -i'
 ### --- Functions -------------------------------------------------------------
 mkcd() { mkdir -p "$1" && cd "$1"; }
 cl() { cd "$1" && la; }
+
 venv() {
     if [ -n "$1" ]; then
         python -m venv "$1" && source "$1/bin/activate"
@@ -116,16 +127,14 @@ venv() {
     fi
 }
 
-# Quick IP address
 myip() {
     curl -s https://ipinfo.io/ip
 }
 
 ### --- Environment -----------------------------------------------------------
 export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins"
-typeset -U path # Remove duplicate paths
+typeset -U path # remove duplicate paths
 
 ### --- Conda (if needed) -----------------------------------------------------
 # >>> conda initialize >>>
-# Add conda initialization here when needed
 # <<< conda initialize <<<
