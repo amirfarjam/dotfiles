@@ -138,3 +138,6 @@ typeset -U path # remove duplicate paths
 ### --- Conda (if needed) -----------------------------------------------------
 # >>> conda initialize >>>
 # <<< conda initialize <<<
+
+# Added by Antigravity
+export PATH="/Users/farjam/.antigravity/antigravity/bin:$PATH"
