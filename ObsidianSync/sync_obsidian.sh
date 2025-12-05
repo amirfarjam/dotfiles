@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 SOURCE="/Users/farjam/Library/CloudStorage/OneDrive-UniversityofEdinburgh/Obsidian/ObsidianED"
-DEST="/Users/farjam/Library/Mobile Documents/com~apple~CloudDocs/MyObsEd"
+DEST="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/ObsidianED"
 
 # Ensure destination exists
 mkdir -p "$DEST"
