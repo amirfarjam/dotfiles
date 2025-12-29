@@ -1,0 +1,17 @@
+[terminal]
+shell = "/bin/bash"
+
+[window]
+opacity = 0.85
+padding = { x = 10, y = 10 }
+
+[keyboard]
+bindings = [
+  { key = "C", mods = "Super", action = "Copy" },
+  { key = "V", mods = "Super", action = "Paste" },
+]
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+color = "#000000"
