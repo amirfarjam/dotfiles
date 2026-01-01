@@ -1,6 +1,6 @@
 if [[ $INTELLIJ_ENVIRONMENT_READER ]]; then return; fi
 ###############################################################################
-# ENHANCED ZSH CONFIGURATION (CLEAN VERSION)
+# ENHANCED ZSH CONFIGURATION (MERGED VERSION)
 ###############################################################################
 
 ### --- Terminal & Colors ------------------------------------------------------
@@ -33,42 +33,14 @@ HISTFILE="$HOME/.zsh_history"
 
 ### --- Oh-My-Zsh -------------------------------------------------------------
 export ZSH="$HOME/.oh-my-zsh"
-
-# Disable OMZ theme (Spaceship is loaded manually)
-ZSH_THEME=""
-
+ZSH_THEME="" # Disabled because we are using Starship
 if [ -d "$ZSH" ]; then
     source "$ZSH/oh-my-zsh.sh"
 fi
 
-###############################################################################
-# LOAD SPACESHIP PROMPT + SEPARATE CONFIG
-###############################################################################
-# Load Spaceship
-if [ -f "/opt/homebrew/opt/spaceship/spaceship.zsh" ]; then
-    source "/opt/homebrew/opt/spaceship/spaceship.zsh"
-fi
-
-# Load custom Spaceship config
-[[ -f ~/.spaceshiprc.zsh ]] && source ~/.spaceshiprc.zsh
-
-###############################################################################
-
-### --- Plugins ---------------------------------------------------------------
-
-# Autosuggestions
-if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-    # Prefer completion-based hints first, history second
-    ZSH_AUTOSUGGEST_STRATEGY=(completion history)
-
-    # Ignore history-based suggestions for cd
-    ZSH_AUTOSUGGEST_HISTORY_IGNORE="cd *"
-
-    # Bind tab to accept suggestion
-    bindkey '^ ' autosuggest-accept
-fi
+### --- STARSHIP PROMPT (Replaces Spaceship) ----------------------------------
+# This gives you the custom look defined in your starship.toml
+eval "$(starship init zsh)"
 
 ### --- Completion ------------------------------------------------------------
 autoload -Uz compinit
@@ -82,11 +54,16 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias ls='ls -G'
-alias ll='ls -lh'
-alias la='ls -lha'
 
-# Git
+alias cat='bat'
+
+# EZA ALIASES (The "DistroTube" colorful list style)
+alias ls='eza -al --color=always --group-directories-first'
+alias ll='eza -l --color=always --group-directories-first'
+alias la='eza -a --color=always --group-directories-first'
+alias lt='eza -aT --color=always --group-directories-first'
+
+# Git (Your Custom Aliases)
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit'
@@ -114,7 +91,7 @@ alias mv='mv -i'
 
 ### --- Functions -------------------------------------------------------------
 mkcd() { mkdir -p "$1" && cd "$1"; }
-cl() { cd "$1" && la; }
+cl() { cd "$1" && ls; } # Updated to use the new 'ls' alias
 
 venv() {
     if [ -n "$1" ]; then
@@ -132,13 +109,13 @@ myip() {
     curl -s https://ipinfo.io/ip
 }
 
+### --- FZF (Fuzzy Finder) ----------------------------------------------------
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source <(fzf --zsh)
+
 ### --- Environment -----------------------------------------------------------
 export TMUX_PLUGIN_MANAGER_PATH="$HOME/.tmux/plugins"
 typeset -U path # remove duplicate paths
-
-### --- Conda (if needed) -----------------------------------------------------
-# >>> conda initialize >>>
-# <<< conda initialize <<<
 
 # Added by Antigravity
 export PATH="/Users/farjam/.antigravity/antigravity/bin:$PATH"

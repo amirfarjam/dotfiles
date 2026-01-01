@@ -1,0 +1,35 @@
+# ~/.config/starship.toml
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$cmd_duration\
+$line_break\
+$character"""
+
+[username]
+show_always = true
+style_user = "bold green"      # CHANGED: Purple -> Green (Matches target)
+format = "[$user]($style) "
+
+[hostname]
+ssh_only = false
+format = "on [$hostname](bold purple) "
+disabled = false
+
+[directory]
+style = "bold cyan"            # CHANGED: Blue -> Cyan (Easier to read)
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+style = "bold red"             # CHANGED: matches the target's red accents
+symbol = " "
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
