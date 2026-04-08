@@ -1,11 +1,7 @@
-# Place a copy of this config to ~/.aerospace.toml
-# After that, you can edit ~/.aerospace.toml to your liking
-
 # --- CORE SETTINGS ---
 start-at-login = true
 automatically-unhide-macos-hidden-apps = true
 
-# Normalizations
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
@@ -29,23 +25,16 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 [mode.main.binding]
     ctrl-slash = 'layout tiles horizontal vertical'
     ctrl-comma = 'layout accordion horizontal vertical'
-
-    # Navigation
     ctrl-h = 'focus left'
     ctrl-j = 'focus down'
     ctrl-k = 'focus up'
     ctrl-l = 'focus right'
-
-    # Moving windows
     ctrl-shift-h = 'move left'
     ctrl-shift-j = 'move down'
     ctrl-shift-k = 'move up'
     ctrl-shift-l = 'move right'
-
     ctrl-minus = 'resize smart -50'
     ctrl-equal = 'resize smart +50'
-
-    # Switch Workspaces
     ctrl-1 = 'workspace 1'
     ctrl-2 = 'workspace 2'
     ctrl-3 = 'workspace 3'
@@ -59,8 +48,6 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
     ctrl-w = 'workspace W'
     ctrl-e = 'workspace E'
     ctrl-r = 'workspace R'
-
-    # Move window to workspace & Follow
     ctrl-shift-1 = ["move-node-to-workspace 1", "workspace 1"]
     ctrl-shift-2 = ["move-node-to-workspace 2", "workspace 2"]
     ctrl-shift-3 = ["move-node-to-workspace 3", "workspace 3"]
@@ -74,11 +61,7 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
     ctrl-shift-w = ["move-node-to-workspace W", "workspace W"]
     ctrl-shift-e = ["move-node-to-workspace E", "workspace E"]
     ctrl-shift-r = ["move-node-to-workspace R", "workspace R"]
-    
-    # CONSOLIDATION KEY: Press this when you switch to one screen
-    # It re-runs these rules and pulls apps from Q/W/E/R back to 1-9
     ctrl-alt-r = 'reload-config'
-
     ctrl-shift-f = 'layout floating tiling'
     ctrl-tab = 'workspace-back-and-forth'
     ctrl-shift-tab = 'move-workspace-to-monitor --wrap-around next'
@@ -106,69 +89,38 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
     E = 'secondary'
     R = 'secondary'
 
-# --- APP RULES (Full Restoration) ---
+# --- THE v0.20.3 COMPATIBLE RULES ---
 
-# 1: Finder & Excel
+# ZOTERO: Only moves if the window title is EXACTLY "Zotero"
+[[on-window-detected]]
+if.app-id = 'org.zotero.zotero'
+if.window-title-regex-substring = '^Zotero$'
+run = 'move-node-to-workspace 6'
+
+# FINDER: Only moves if it's the main Finder window
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
+if.window-title-regex-substring = '^Finder$'
 run = 'move-node-to-workspace 1'
 
+# VS CODE:
 [[on-window-detected]]
-if.app-id = 'com.microsoft.Excel'
-run = 'move-node-to-workspace 1'
+if.app-id = 'com.microsoft.VSCode'
+run = 'move-node-to-workspace 8'
 
-# 2: Firefox
+# OTHER APPS (Basic Rules)
 [[on-window-detected]]
 if.app-id = 'org.mozilla.firefox'
 run = 'move-node-to-workspace 2'
 
-# 3: Chrome (Rule based on original script)
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 run = 'move-node-to-workspace 3'
 
-# 4: Outlook & Teams
 [[on-window-detected]]
 if.app-id = 'com.microsoft.Outlook'
 run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
-if.app-id = 'com.microsoft.teams2'
-run = 'move-node-to-workspace 4'
-
-# 5: Obsidian
-[[on-window-detected]]
 if.app-id = 'md.obsidian'
 run = 'move-node-to-workspace 5'
-
-# 6: Zotero & PowerPoint (Pulling PowerPoint to 6 for single screen)
-[[on-window-detected]]
-if.app-id = 'org.zotero.zotero'
-run = 'move-node-to-workspace 6'
-
-[[on-window-detected]]
-if.app-id = 'com.microsoft.Powerpoint'
-run = 'move-node-to-workspace 6'
-
-# 7: Word
-[[on-window-detected]]
-if.app-id = 'com.microsoft.Word'
-run = 'move-node-to-workspace 7'
-
-# 8: VS Code & GitHub
-[[on-window-detected]]
-if.app-id = 'com.microsoft.VSCode'
-run = 'move-node-to-workspace 8'
-
-[[on-window-detected]]
-if.app-id = 'com.github.GitHubClient'
-run = 'move-node-to-workspace 8'
-
-# 9: Terminals
-[[on-window-detected]]
-if.app-id = 'com.apple.Terminal'
-run = 'move-node-to-workspace 9'
-
-[[on-window-detected]]
-if.app-id = 'com.googlecode.iterm2'
-run = 'move-node-to-workspace 9'
